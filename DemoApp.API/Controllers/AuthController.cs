@@ -35,9 +35,10 @@ namespace DemoApp.API.Controllers {
 
         [HttpPost ("Login")]
         public async Task<IActionResult> Login (LoginUserDto loginUserDto) {
+            
             var userToBeLogged = await _repo.Login (loginUserDto.UserName, loginUserDto.Password);
             if (userToBeLogged is null)
-                return Unauthorized ();
+                return Unauthorized ("not authorized");
             var claims = new [] {
                 new Claim (ClaimTypes.NameIdentifier, userToBeLogged.Id.ToString ()),
                 new Claim (ClaimTypes.Name, userToBeLogged.UserName)
