@@ -18,6 +18,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using DemoApp.API.Helpers;
+using AutoMapper;
+
 namespace DemoApp.API
 {
     public class Startup
@@ -33,8 +35,13 @@ namespace DemoApp.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(opt=>
+            {
+            opt.SerializerSettings.ReferenceLoopHandling= Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
+            services.AddAutoMapper(typeof(DataRepository).Assembly );
             services.AddCors();
+            services.AddScoped<IDataRepository,DataRepository>();
             services.AddScoped<IAuthRepository,AuthRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
                                         AddJwtBearer(

@@ -1,17 +1,15 @@
-
 using System;
 using System.Collections.Generic;
+using DemoApp.API.Models;
 
-namespace DemoApp.API.Models
+namespace DemoApp.API.Dtos
 {
-    public class User
+    public class UserForDetailedDto
     {
         public int Id { get; set; }
         public string UserName { get; set; }
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordSalt { get; set; }
         public string   Gender{get;set;}
-        public DateTime   DateOfBirth{get;set;}
+        public int   Age{get;set;}
         public string   Knownas{get;set;}
         public DateTime   CreatedAt{get;set;}
          public DateTime   LastActive{get;set;}
@@ -20,7 +18,8 @@ namespace DemoApp.API.Models
             public string   Interests{get;set;}
              public string   City{get;set;}
               public string   Country{get;set;}
-               public ICollection<Photo>   Photos{get;set;}
-        
+               public ICollection<photosForDetailedDto> Photos{get;set;}
+               public string PhotoUrl {get;set;}
+
     }
 }
